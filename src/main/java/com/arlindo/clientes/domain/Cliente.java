@@ -1,11 +1,25 @@
 package com.arlindo.clientes.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Cliente {
 	
 	private String nome;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@JsonInclude(Include.NON_NULL)
 	private String endereco;
+	@JsonInclude(Include.NON_NULL)
 	private String telefone;
 	
 	public Cliente() {}
