@@ -8,16 +8,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arlindo.clientes.domain.Cliente;
 import com.arlindo.clientes.repository.ClientesRepository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 @RestController
+@RequestMapping("/clientes")
 public class ClientesResources {
 	
 	@Autowired
 	private ClientesRepository clientesRepository;
 
-	@GetMapping("/clientes")
+	@GetMapping
 	public List<Cliente> listar() {
 		
-		return clientesRepository.findAll();
+		return clientesRepository.findAll(); 
 	} 
+	
+	@PostMapping
+	public void salvar(@RequestBody Cliente cliente) {  
+		
+	  clientesRepository.save(cliente);
+	}
 }
+	
