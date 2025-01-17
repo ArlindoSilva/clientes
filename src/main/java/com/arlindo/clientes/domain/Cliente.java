@@ -19,6 +19,7 @@ public class Cliente {
 	
 	@JsonInclude(Include.NON_NULL)
 	private String endereco;
+	
 	@JsonInclude(Include.NON_NULL)
 	private String telefone;
 	
