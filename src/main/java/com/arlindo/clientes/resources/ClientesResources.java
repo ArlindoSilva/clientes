@@ -45,5 +45,11 @@ public class ClientesResources {
 		clientesRepository.deleteById(id);
 	}
 	
+	@PutMapping("/{id}")
+	public void atualizar(@RequestBody Cliente cliente, @PathVariable int id) {
+		cliente.setId(id);
+		clientesRepository.save(cliente);
+	}
+	
 }
 	
