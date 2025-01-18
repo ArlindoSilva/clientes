@@ -3,6 +3,9 @@ package com.arlindo.clientes.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,8 +39,13 @@ public class ClientesResources {
 	}
 	
 	@GetMapping("/{id}")
-	public Cliente buscar(@PathVariable int id) {
-		return clientesRepository.findById(id).get();
+	public ResponseEntity<?> buscar(@PathVariable int id) {
+		Cliente cliente = clientesRepository.findById(id).orElse(null);
+		if (cliente == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(cliente);	
+		//Se o cliente existir, traz o statusCode .OK, e o corpo da requisição.
 	}
 	
 	@DeleteMapping("/{id}")
