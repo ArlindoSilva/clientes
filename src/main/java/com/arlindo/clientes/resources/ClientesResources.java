@@ -29,9 +29,9 @@ public class ClientesResources {
 	private ClientesRepository clientesRepository;
 
 	@GetMapping
-	public List<Cliente> listar() {
+	public ResponseEntity<List<Cliente>> listar() {								//Utiliza o ResponseEntity para fazer  retorno.
 		
-		return clientesRepository.findAll(); 
+		return ResponseEntity.status(HttpStatus.OK).body(clientesRepository.findAll()); //Retorna ststus OK, e utiliza o body para fazer a busca no banco de dados
 	} 
 	
 	@PostMapping
