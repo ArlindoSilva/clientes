@@ -61,15 +61,16 @@ public class ClientesResources {
 			clientesRepository.deleteById(id);		
 			return ResponseEntity.noContent().build();
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build(); 
 		}
 	}  
 	
 	@PutMapping("/{id}")
-	public void atualizar(@RequestBody Cliente cliente, @PathVariable int id) {
+	public ResponseEntity<Void> atualizar(@RequestBody Cliente cliente, @PathVariable int id) {
 		cliente.setId(id);
 		clientesRepository.save(cliente);
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-	
 }
 	
