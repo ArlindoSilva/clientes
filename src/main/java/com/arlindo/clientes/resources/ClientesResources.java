@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -55,9 +56,14 @@ public class ClientesResources {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable int id) {
-		clientesRepository.deleteById(id);
-	}
+	public ResponseEntity<Void> deletar (@PathVariable int id) {
+		if (clientesRepository.existsById(id)) {
+			clientesRepository.deleteById(id);		
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}  
 	
 	@PutMapping("/{id}")
 	public void atualizar(@RequestBody Cliente cliente, @PathVariable int id) {
