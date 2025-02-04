@@ -16,6 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.arlindo.clientes.domain.Cliente;
 import com.arlindo.clientes.repository.ClientesRepository;
+import com.arlindo.clientes.services.ClientesService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,13 +28,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/clientes")
 public class ClientesResources {
 	
+	//ClientesRepository será removido para ClientesService junto com as regras de negócios dos métodos.
 	@Autowired
 	private ClientesRepository clientesRepository;
+	
+	@Autowired
+	private ClientesService clientesService;
 
 	@GetMapping
 	public ResponseEntity<List<Cliente>> listar() {								//Utiliza o ResponseEntity para fazer  retorno.
 		
-		return ResponseEntity.status(HttpStatus.OK).body(clientesRepository.findAll()); //Retorna ststus OK, e utiliza o body para fazer a busca no banco de dados
+		return ResponseEntity.status(HttpStatus.OK).body(clientesService.listar()); //Retorna ststus OK, e utiliza o body para fazer a busca no banco de dados
 	} 
 	
 	@PostMapping
@@ -52,7 +58,7 @@ public class ClientesResources {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(cliente);	
-		//Se o cliente existir, traz o statusCode .OK, e o corpo da requisição.
+		//Se o cliente existir, traz o statusCode .OK, e o corpo da requisição. 
 	}
 	
 	@DeleteMapping("/{id}")
@@ -63,7 +69,7 @@ public class ClientesResources {
 		} else {
 			return ResponseEntity.notFound().build(); 
 		}
-	}  
+	}   
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> atualizar(@RequestBody Cliente cliente, @PathVariable int id) {
